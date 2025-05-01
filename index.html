@@ -33,6 +33,8 @@
             --shadow-lg: 0 16px 40px rgba(21, 153, 87, 0.15);
             --nav-height: 80px;
             --transition: .3s cubic-bezier(.4,0,.2,1);
+            --clr-logo-sun:   #F5A45D;  /* soft orange  */
+            --clr-logo-field: #6A9A5D;  /* muted green  */
             --font-base: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
@@ -357,6 +359,7 @@
             color: var(--clr-copy); /* Use main text color or accent */
             /* color: var(--clr-accent); */
             font-size: clamp(2.5rem, 5vw, 4rem); /* Adjust size if needed */
+            text-shadow:0 2px 4px rgba(0,0,0,.06);
         }
 
 
@@ -368,6 +371,7 @@
             margin-left: auto;
             margin-right: auto;
             color: var(--clr-copy-light);
+            text-shadow:0 1px 2px rgba(0,0,0,.04);
         }
 
         .hero-buttons {
@@ -377,6 +381,33 @@
             margin-top: 2rem;
             flex-wrap: wrap;
         }
+
+        /* --- Hero background logo ------------------------------------------- */
+        .hero-logo-wrapper{
+            position:absolute;           /* sit behind the content               */
+            inset:0;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            pointer-events:none;         /* completely non-interactive           */
+            z-index:0;                   /* stays above .hero::before gradient   */
+        }
+
+        .hero-logo-wrapper svg{
+            width:70%;
+            max-width:700px;
+            height:auto;
+            stroke-linecap:round;
+            stroke-linejoin:round;
+            stroke-width:8;
+        }
+
+        .hero-logo-wrapper .sun   { stroke:var(--clr-logo-sun);   opacity:.12; }
+        .hero-logo-wrapper .field { stroke:var(--clr-logo-field); opacity:.12; }
+
+        /* make sure the foreground text stays on top */
+        .hero-content{ z-index:2; }
+
 
         /* Shared Section Header */
         .section-header {
@@ -575,6 +606,17 @@
             display: flex;
             flex-direction: column;
         }
+
+        /* raster logo image */
+        .hero-logo{
+            width:50%;              /* smaller so it clears the headline   */
+            max-width:500px;
+            opacity:.06;            /* MUCH lighter watermark              */
+            filter:blur(.6px);      /* softens edges                       */
+            transform:translateY(18%); /* lowers hills below buttons       */
+            pointer-events:none;
+        }
+
 
         .resource-content h3 {
             margin-bottom: 0.75rem;
@@ -800,6 +842,10 @@
             animation: moveBackground 30s linear infinite;
         }
 
+        .hero{ position:relative; }              /* creates a stacking context   */
+        .hero-logo-wrapper{ z-index:1; }         /* now sits above ::before bg   */
+
+
         @keyframes moveBackground {
             0% { background-position: 0 0; }
             100% { background-position: 80px 80px; }
@@ -915,15 +961,27 @@
     </div>
 </header>
 
-<section id="home" class="hero"> <div class="hero-content">
-    <h1>Diabetes Day to Day</h1>
-    <p>Welcome! This site is for you if you have prediabetes or type 2 diabetes. Visit our blog and other pages to learn how we can help you manage the ins and outs of living with these conditions. Come back often!</p>
-    <div class="hero-buttons">
-        <a href="#blog" class="btn">Visit the Blog</a>
-        <a href="#resources" class="btn btn-secondary">Explore Resources</a>
+
+<section id="home" class="hero">
+    <div class="hero-content">
+        <h1>Diabetes Day to Day</h1>
+        <p>Welcome! This site is for you if you have prediabetes or type 2 diabetes.…</p>
+        <div class="hero-buttons">
+            <a href="#blog" class="btn">Visit the Blog</a>
+            <a href="#resources" class="btn btn-secondary">Explore Resources</a>
+        </div>
     </div>
-</div>
+
+    <div class="hero-logo-wrapper" aria-hidden="true">
+        <img src="image.png" alt="" class="hero-logo">
+    </div>
+
+
+
+
 </section>
+
+
 
 <section id="about" class="panel-section"> <div class="section-header">
     <h2>About Us</h2>
